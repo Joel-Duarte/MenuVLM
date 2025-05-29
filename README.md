@@ -89,6 +89,6 @@ The Express.js server acts as the bridge between the frontend and the AI model.
 
 ## ⚠️ Important Note: Resume Project Only
 
-Please be aware that this project is intended solely as a **resume piece** to demonstrate technical skills in full-stack development, AI integration, and UI/UX design.
+Please be aware that this project is intended solely as a **resume piece** to demonstrate technical skills in full-stack development and AI integration.
 
 ---
