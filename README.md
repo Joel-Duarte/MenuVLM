@@ -72,7 +72,7 @@ The frontend is a static HTML, CSS, and JavaScript application.
 ## How It Works
 
 The Express.js server acts as the bridge between the frontend and the AI model.
-* It exposes two key API endpoints:
+* It exposes one key API endpoint:
     * **`POST /api/upload-image`**:
         * Receives the uploaded image file using `multer`.
         * Sends the image (and a relevant prompt) to the local or remotelly running **Ollama `vision` model**.
