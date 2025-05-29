@@ -64,7 +64,7 @@ app.post('/api/upload', upload.single('image'), async (req, res) => {
         return; 
     }
 
-    // --- Image Pre-processing (Deblur, Upscale, Normalize, Grayscale, Noise Reduction) using Sharp ---
+    // --- Image Pre-processing (Deblur, Normalize, Grayscale, Noise Reduction) using Sharp ---
     let processedImageBuffer: Buffer;
     let processedMimeType: string = 'image/png'; 
 
@@ -140,9 +140,9 @@ app.post('/api/upload', upload.single('image'), async (req, res) => {
         // Construct the payload for the Ollama API
         const ollamaPayload = {
             model: OLLAMA_MODEL,
-            prompt: OLLAMA_MENU_PROMPT, // Use the prompt from .env
-            stream: false, // We want a single response, not a stream
-            images: [base64ImageData], // Send the image data
+            prompt: OLLAMA_MENU_PROMPT, 
+            stream: false, 
+            images: [base64ImageData], 
             options: ollamaGenerationOptions
         };
 
@@ -165,13 +165,13 @@ app.post('/api/upload', upload.single('image'), async (req, res) => {
         // --- Start of JSON parsing refinement ---
         let extractedJsonString = '';
 
-        // 1. Try to extract from a markdown code block (```json ... ```)
+        // Try to extract from a markdown code block (```json ... ```)
         const jsonCodeBlockMatch = responseText.match(/```json\s*([\s\S]*?)```/);
         if (jsonCodeBlockMatch && jsonCodeBlockMatch[1]) {
             extractedJsonString = jsonCodeBlockMatch[1].trim();
             console.log("Extracted JSON from markdown block.");
         } else {
-            // 2. If no markdown block, try to find the first '{' or '[' and the last '}' or ']'
+            // If no markdown block, try to find the first '{' or '[' and the last '}' or ']'
             const firstBraceIndex = responseText.indexOf('{');
             const firstBracketIndex = responseText.indexOf('[');
 
@@ -180,11 +180,11 @@ app.post('/api/upload', upload.single('image'), async (req, res) => {
 
             // Determine if the JSON starts with an object or an array and find its extent
             if (firstBraceIndex !== -1 && (firstBracketIndex === -1 || firstBraceIndex < firstBracketIndex)) {
-                // Starts with an object
+
                 jsonStartIndex = firstBraceIndex;
                 jsonEndIndex = responseText.lastIndexOf('}');
             } else if (firstBracketIndex !== -1) {
-                // Starts with an array
+                
                 jsonStartIndex = firstBracketIndex;
                 jsonEndIndex = responseText.lastIndexOf(']');
             }
@@ -193,7 +193,7 @@ app.post('/api/upload', upload.single('image'), async (req, res) => {
                 extractedJsonString = responseText.substring(jsonStartIndex, jsonEndIndex + 1);
                 console.log("Extracted JSON from direct brace/bracket matching.");
             } else {
-                // Fallback: If no clear JSON structure is found, assume the whole response might be JSON
+                // Fallback: If no clear JSON structure is found
                 extractedJsonString = responseText.trim();
                 console.log("No clear JSON structure found, attempting to parse entire response.");
             }
