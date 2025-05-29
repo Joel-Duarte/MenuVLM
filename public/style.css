@@ -1,0 +1,33 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #2563eb; 
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+
+.history-container::-webkit-scrollbar,
+#jsonModal .flex-grow::-webkit-scrollbar-track{
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+.history-container::-webkit-scrollbar-track,
+#jsonModal .flex-grow::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+.history-container::-webkit-scrollbar-thumb:hover,
+#jsonModal .flex-grow::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
